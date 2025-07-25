@@ -13,6 +13,7 @@ const navLinks = [
   { href: "/about", label: "About" },
   { href: "/projects", label: "Projects" },
   { href: "/contact", label: "Contact" },
+  { href: "/admin", label: "Dashboard" },
 ];
 
 function ThemeToggle() {
@@ -45,13 +46,18 @@ function ThemeToggle() {
 export function Header() {
   const pathname = usePathname();
   const [isSheetOpen, setSheetOpen] = useState(false);
+  
+  const isAdminRoute = pathname.startsWith('/admin');
+  if (isAdminRoute) {
+    return null;
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
         <Link href="/" className="mr-6 flex items-center space-x-2">
           <Feather className="h-6 w-6 text-primary" />
-          <span className="font-bold font-headline">DevFolio</span>
+          <span className="font-bold">DevFolio</span>
         </Link>
         <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
           {navLinks.map(({ href, label }) => (

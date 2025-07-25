@@ -1,19 +1,16 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/toaster";
+import { cn } from "@/lib/utils";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { Toaster } from "@/components/ui/toaster";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-});
 
-const spaceGrotesk = Space_Grotesk({
+const fontSans = FontSans({
   subsets: ["latin"],
-  variable: "--font-space-grotesk",
+  variable: "--font-sans",
 });
 
 export const metadata: Metadata = {
@@ -33,7 +30,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} font-body antialiased`}
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable
+        )}
       >
         <ThemeProvider
           attribute="class"
@@ -41,9 +41,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="flex min-h-screen flex-col">
+          <div className="relative flex min-h-screen flex-col">
             <Header />
-            <main className="flex-grow">{children}</main>
+            <main className="flex-1">{children}</main>
             <Footer />
           </div>
           <Toaster />
